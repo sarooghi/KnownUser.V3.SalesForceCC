@@ -58,16 +58,16 @@ exports.httpContextProvider = function() {
         getHttpResponse: function() {
             return {
             	setCookie : function(cookieName, cookieValue, domain, expir) {
-            		
+	
             		var cookieToAdd = require('dw/web/Cookie')(cookieName, encodeURIComponent( cookieValue));
             		if (!((domain == null) || (domain == ''))) {
             			cookieToAdd.setDomain(domain);
             		}
-            		cookieToAdd.setPath('/');
-					var maxAge = Math.floor((new Date(expir).getTime() - new Date().getTime() ) / 1000);
-            		cookieToAdd.setMaxAge(maxAge);
-        			
-        			response.addHttpCookie(cookieToAdd);
+					cookieToAdd.setPath('/');
+					var maxAge = parseInt(expir) - Math.floor( new Date().getTime() / 1000  );
+		            cookieToAdd.setMaxAge(maxAge);
+					response.addHttpCookie(cookieToAdd);
+
         			return '';
             	}
             }}

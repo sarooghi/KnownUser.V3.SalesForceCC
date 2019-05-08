@@ -65,7 +65,7 @@ exports.httpContextProvider = function() {
             		}
             		cookieToAdd.setPath('/');
             		
-					var maxAge = Math.floor((new Date(expir).getTime() - new Date().getTime() ) / 1000);
+					var maxAge = parseInt(expir) - Math.floor( new Date().getTime() / 1000  );
             		cookieToAdd.setMaxAge(maxAge);
         			
         			response.addHttpCookie(cookieToAdd);
