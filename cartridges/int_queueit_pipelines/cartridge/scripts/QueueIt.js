@@ -82,7 +82,7 @@ exports.Start = function() {
 					// handle ajax
 					if (validationResult.isAjaxResult) {
 						// need to set the header and send back success
-						session.custom.ajaxredirecturl = addKUPlatformVersion( validationResult.getAjaxRedirectUrl());
+						session.custom.ajaxredirecturl = addKUPlatformVersion(validationResult.getAjaxRedirectUrl());
 						returnVal.type = 'ajax';
 						returnVal.location = null;
 						
@@ -92,10 +92,9 @@ exports.Start = function() {
 					else 
 					{
 						session.custom.ajaxredirecturl = null;
-						var location = addKUPlatformVersion( validationResult.redirectUrl); 
 						// redirect
 						returnVal.type ='redirect';
-						returnVal.location = location;
+						returnVal.location = addKUPlatformVersion(validationResult.redirectUrl);
 						return returnVal;
 						
 					}
@@ -104,7 +103,8 @@ exports.Start = function() {
 				{
 					session.custom.ajaxredirecturl = null;
 					if (requestUrl.toString() !== requestUrlWithoutToken && validationResult.actionType) {
-				        resonse.redirect(requestUrlWithoutToken);
+								response.redirect(requestUrlWithoutToken);
+								return;
 				    } else {
 				    	return;
 				    }					
@@ -134,8 +134,9 @@ function configureKnownUserHashing() {
       return hashHex;
     };
 }
+
+
 function addKUPlatformVersion(queueRedirectUrl)
 {
 	return  queueRedirectUrl+ "&kupver=" + SALESFORCE_SDK_VERSION;
 }
-

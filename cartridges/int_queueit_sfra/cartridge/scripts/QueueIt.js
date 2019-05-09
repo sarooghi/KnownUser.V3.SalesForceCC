@@ -64,18 +64,27 @@ exports.Start = function(configs) {
 					// handle ajax
 					if (validationResult.isAjaxResult) {
 						// need to set the header and send back success
-						session.custom.ajaxredirecturl = addKUPlatformVersion( validationResult.getAjaxRedirectUrl());
+						session.custom.ajaxredirecturl = addKUPlatformVersion(validationResult.getAjaxRedirectUrl());
 						return;
 						
 					}
 					else 
 					{
 						session.custom.ajaxredirecturl = null;
-						var location = addKUPlatformVersion( validationResult.redirectUrl); 
 						// redirect
-						response.redirect(location);
+						response.redirect(addKUPlatformVersion(validationResult.redirectUrl));
 						return;
 					}
+				}
+				else
+				{
+					session.custom.ajaxredirecturl = null;
+					if (requestUrl.toString() !== requestUrlWithoutToken && validationResult.actionType) {
+								response.redirect(requestUrlWithoutToken);
+								return;
+				    } else {
+				    	return;
+				    }	
 				}
 				
 			}
